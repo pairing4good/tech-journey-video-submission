@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import { Storage, API } from 'aws-amplify';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 import { createSubmission } from './graphql/mutations';
@@ -9,13 +9,17 @@ import { v4 as uuidv4 } from 'uuid';
 const initialFormState = { 
   firstName: '',
   lastName: '',
-  emailAddress: '',
   schoolGrade: '',
   videoLink: ''
  }
 
 function App() {
   const [formData, setFormData] = useState(initialFormState);
+
+  useEffect(() => {
+    const user = await Auth.currentAuthenticatedUser();
+    setFormData({ ...formData, 'emailAddress': user.attributes.email})
+  }, []);
 
   async function uploadVideo(e) {
     if (!e.target.files[0]) return
@@ -27,9 +31,7 @@ function App() {
 
 
   async function save(){
-    const user = await Auth.currentAuthenticatedUser();
-    const submission = { ...formData, 'emailAddress': user.attributes.email}
-    await API.graphql({ query: createSubmission, variables: { input: submission } });
+    await API.graphql({ query: createSubmission, variables: { input: formData } });
     setFormData(initialFormState);
   }
 
