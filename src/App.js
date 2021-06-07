@@ -1,25 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import { Storage } from 'aws-amplify';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
 
 function App() {
+
+  async function onChange(e) {
+    console.log('before if')
+    if (!e.target.files[0]) return
+    const file = e.target.files[0];
+    console.log('file: ' + file)
+    await Storage.put(file.name, file);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input type="file" onChange={onChange}/>
+      <AmplifySignOut/>
     </div>
   );
 }
 
-export default App;
+export default withAuthenticator(App);

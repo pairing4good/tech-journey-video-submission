@@ -3,10 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Amplify from "aws-amplify";
+import {AmplifyAuthenticator, AmplifySignOut} from "@aws-amplify/ui-react";
+import awsconfig from "./aws-exports";
+
+Amplify.configure(awsconfig);
+
+Amplify.configure(config);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AmplifyAuthenticator>
+      <App />
+      <AmplifySignOut />
+    </AmplifyAuthenticator>
   </React.StrictMode>,
   document.getElementById('root')
 );
