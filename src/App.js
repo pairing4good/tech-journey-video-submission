@@ -46,9 +46,10 @@ function App() {
         <Col>
           <Form>
             <Form.Group>
-              <Form.Control type="text" onChange={e => setFormData({ ...formData, 'firstName': e.target.value})}
+              <Form.Control required type="text" onChange={e => setFormData({ ...formData, 'firstName': e.target.value})}
                 placeholder="First Name"
                 value={formData.firstName}/>
+              <Form.Control.Feedback>Please provide your first name.</Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
               <Form.Control type="text" onChange={e => setFormData({ ...formData, 'lastName': e.target.value})}

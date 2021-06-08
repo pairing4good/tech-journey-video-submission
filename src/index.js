@@ -23,7 +23,7 @@ ReactDOM.render(
         <Col>
           <Image src="logo.png" />
         </Col>
-        <Col xs={4} style={{padding: 20}}>
+        <Col style={{paddingTop: 20}}>
           <AmplifySignOut/>
         </Col>
       </Row>
