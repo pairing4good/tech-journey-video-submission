@@ -1,9 +1,9 @@
 import './App.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { Storage, API } from 'aws-amplify';
-import { withAuthenticator } from '@aws-amplify/ui-react';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 import { createSubmission } from './graphql/mutations';
-import { Auth } from 'aws-amplify';
+import { Auth} from 'aws-amplify';
 import { v4 as uuidv4 } from 'uuid';
 import { Row, Col, Form, Button, Spinner, FormFile} from 'react-bootstrap';
 
@@ -57,6 +57,17 @@ function App() {
 
   return (
     <div className="App">
+      <Row>
+        <Col style={{textAlign: 'left'}}>
+          <p><b>Video Submission Requirements</b></p> 
+          <ol>
+            <li>Video should be at least 1 minute long</li>
+            <li>Answers the question "How has Tech Camp impacted your own technology journey?"</li>
+            <li>Introduce yourself in your video</li>
+            <li>Use the phrase "Tech Journey" in your video</li>
+          </ol>
+        </Col>
+      </Row>
       <Row>
         <Col>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>

@@ -5,12 +5,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Amplify from "aws-amplify";
 import config from "./aws-exports";
-import { Container, Row, Col, Image } from 'react-bootstrap';
-import { AmplifySignOut } from '@aws-amplify/ui-react';
+import { Auth} from 'aws-amplify';
+import { Container, Row, Col, Image, Button } from 'react-bootstrap';
 
 Amplify.configure(config);
 
+const signOut = (e) => {
+  e.preventDefault();
+  Auth.signOut();
+  window.location.reload();
+}
+
 ReactDOM.render(
+  
   <React.StrictMode>
     <link
       rel="stylesheet"
@@ -18,20 +25,15 @@ ReactDOM.render(
       integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
       crossorigin="anonymous"
     />
-    <Container>
+    <Container style={{padding: 20}}>
       <Row>
         <Col>
           <Image src="logo.png" />
         </Col>
-        <Col style={{paddingTop: 20}}>
-          <AmplifySignOut/>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <p><b>Create a 1 minute video that answers the following question "How has Tech Camp impacted your own technology journey?"</b></p>
-          <p><b>Video Submission Requirements - </b> <b>1)</b> video should be at least 1 minute long <b>2)</b> introduce yourself in your video 
-          <b>3)</b> share your year in school in your video <b>4)</b> use the phrase "Tech Journey", at least once, in your video</p>
+        <Col style={{paddingTop: 30}}>
+          <Button onClick={signOut} variant="link">
+            Sign Out
+          </Button>
         </Col>
       </Row>
       <App />
