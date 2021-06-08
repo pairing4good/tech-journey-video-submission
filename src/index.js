@@ -5,12 +5,21 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Amplify from "aws-amplify";
 import config from "./aws-exports";
+import { Container } from 'react-bootstrap';
 
 Amplify.configure(config);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <Container>
+      <App />
+    </Container>
   </React.StrictMode>,
   document.getElementById('root')
 );
