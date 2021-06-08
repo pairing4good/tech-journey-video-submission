@@ -7,6 +7,8 @@ import { Auth} from 'aws-amplify';
 import { v4 as uuidv4 } from 'uuid';
 import { Row, Col, Form, Button, Spinner, FormFile} from 'react-bootstrap';
 
+const oneGigabyte = 1000000000
+
 const initialFormState = { 
   firstName: '',
   lastName: '',
@@ -43,6 +45,15 @@ function App() {
 
   const handleSubmit = async (event) => {
     const form = event.currentTarget;
+    const fileSize = videoSubmission.current.files[0].size;
+    const fileName = videoSubmission.current.files[0].name
+    const fileType = fileName.substr(fileName.length - 3).toLowerCase();
+    var fileTypes = ['mov', 'mp4', 'm4p', 'm4v', 'wmv', '.qt', 'avi'];
+
+    if(fileSize > oneGigabyte || !fileTypes.includes(fileType)){
+      videoSubmission.current.value = null;
+    }
+    
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
@@ -101,7 +112,7 @@ function App() {
             <Form.Group>
               <FormFile>
                 <FormFile.Input required ref={ videoSubmission }/>
-                <Form.Control.Feedback  type="invalid">Please provide a 1 minute video.</Form.Control.Feedback>
+                <Form.Control.Feedback  type="invalid">Please provide a 1 minute video. (MOV or MP4 less than 1GB).</Form.Control.Feedback>
               </FormFile>
             </Form.Group>
             <Form.Group>
