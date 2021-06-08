@@ -5,7 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Amplify from "aws-amplify";
 import config from "./aws-exports";
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col, Image } from 'react-bootstrap';
+import { AmplifySignOut } from '@aws-amplify/ui-react';
 
 Amplify.configure(config);
 
@@ -18,6 +19,21 @@ ReactDOM.render(
       crossorigin="anonymous"
     />
     <Container>
+      <Row>
+        <Col>
+          <Image src="logo.png" />
+        </Col>
+        <Col xs={4} style={{padding: 20}}>
+          <AmplifySignOut/>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <p><b>Create a 1 minute video that answers the following question "How has Tech Camp impacted your own technology journey?"</b></p>
+          <p><b>Video Submission Requirements - </b> <b>1)</b> video should be at least 1 minute long <b>2)</b> introduce yourself in your video 
+          <b>3)</b> share your year in school in your video <b>4)</b> use the phrase "Tech Journey", at least once, in your video</p>
+        </Col>
+      </Row>
       <App />
     </Container>
   </React.StrictMode>,

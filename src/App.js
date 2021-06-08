@@ -1,11 +1,11 @@
 import './App.css';
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Storage, API } from 'aws-amplify';
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import { createSubmission } from './graphql/mutations';
 import { Auth } from 'aws-amplify';
 import { v4 as uuidv4 } from 'uuid';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Row, Col, Form, Button, Spinner } from 'react-bootstrap';
 
 const initialFormState = { 
   firstName: '',
@@ -15,27 +15,29 @@ const initialFormState = {
  }
 
 function App() {
+  const videoSubmission = useRef(null);
+  const [state, setState] = useState({isSubmitting: false});
   const [formData, setFormData] = useState(initialFormState);
 
   useEffect(() => {
     Auth.currentAuthenticatedUser().then( user => {
-      setFormData({ ...formData, 'emailAddress': user.attributes.email})
+      setFormData({ ...initialFormState, 'emailAddress': user.attributes.email})
     });
     
   }, []);
 
-  async function uploadVideo(e) {
-    if (!e.target.files[0]) return
-    const file = e.target.files[0];
-    const fileName = (uuidv4() + "-" + file.name).replace(/\s/g, '');
-    setFormData({ ...formData, 'videoLink': fileName})
-    await Storage.put(fileName, file);
-  }
-
 
   async function save(){
-    await API.graphql({ query: createSubmission, variables: { input: formData } });
+    if (!videoSubmission.current.files[0]) return
+    setState({isSubmitting: true});
+    const file = videoSubmission.current.files[0];
+    const fileName = (uuidv4() + "-" + file.name).replace(/\s/g, '');
+    await Storage.put(fileName, file);
+
+    await API.graphql({ query: createSubmission, variables: { input: { ...formData, 'videoLink': fileName } } });
     setFormData(initialFormState);
+    videoSubmission.current.value = null;
+    setState({isSubmitting: false});
   }
 
   return (
@@ -68,17 +70,15 @@ function App() {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              <Form.File onChange={uploadVideo}/>
+              <Form.File ref={ videoSubmission }/>
             </Form.Group>
             <Form.Group>
-                <Button onClick={save}>Submit Video</Button>
+              {state.isSubmitting ? <Spinner animation="border" variant="primary"/> :
+                <Button onClick={save}>
+                   Submit Video
+                </Button>}
             </Form.Group>
           </Form>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <AmplifySignOut/>
         </Col>
       </Row>
     </div>
