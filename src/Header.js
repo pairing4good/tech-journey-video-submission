@@ -11,6 +11,7 @@ const signOut = (e) => {
 
 function Header(props) {
   return (
+    <div>
     <Row>
         <Col>
         <Image src="logo.png" />
@@ -23,6 +24,10 @@ function Header(props) {
         }
         </Col>
     </Row>
+    <Row>
+        <Col><h3>Video Submission</h3></Col>
+    </Row>
+    </div>
   );
 }
 
