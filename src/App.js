@@ -79,6 +79,7 @@ function App() {
             <li>Answers the question "How has Tech Camp impacted your own technology journey?"</li>
             <li>Introduce yourself in your video</li>
             <li>Use the phrase "Tech Journey" in your video</li>
+            <li>No music or special effects added to your video</li>
           </ol>
         </Col>
       </Row>
