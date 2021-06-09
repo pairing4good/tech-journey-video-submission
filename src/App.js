@@ -45,15 +45,18 @@ function App() {
 
   const handleSubmit = async (event) => {
     const form = event.currentTarget;
-    const fileSize = videoSubmission.current.files[0].size;
-    const fileName = videoSubmission.current.files[0].name
-    const fileType = fileName.substr(fileName.length - 3).toLowerCase();
-    var fileTypes = ['mov', 'mp4', 'm4p', 'm4v', 'wmv', '.qt', 'avi'];
 
-    if(fileSize > oneGigabyte || !fileTypes.includes(fileType)){
-      videoSubmission.current.value = null;
+    if (videoSubmission.current.files[0]){
+      const fileSize = videoSubmission.current.files[0].size;
+      const fileName = videoSubmission.current.files[0].name
+      const fileType = fileName.substr(fileName.length - 3).toLowerCase();
+      var fileTypes = ['mov', 'mp4', 'm4p', 'm4v', 'wmv', '.qt', 'avi'];
+
+      if(fileSize > oneGigabyte || !fileTypes.includes(fileType)){
+        videoSubmission.current.value = null;
+      }
     }
-    
+
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
