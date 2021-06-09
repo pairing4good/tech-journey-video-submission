@@ -1,7 +1,6 @@
 import './App.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { Storage, API } from 'aws-amplify';
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 import { createSubmission } from './graphql/mutations';
 import { Auth} from 'aws-amplify';
 import { v4 as uuidv4 } from 'uuid';
@@ -132,4 +131,4 @@ function App() {
   );
 }
 
-export default withAuthenticator(App);
+export default App;

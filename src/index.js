@@ -1,20 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import AuthStateApp from './AuthStateApp';
 import reportWebVitals from './reportWebVitals';
 import Amplify from "aws-amplify";
 import config from "./aws-exports";
-import { Auth} from 'aws-amplify';
-import { Container, Row, Col, Image, Button } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 Amplify.configure(config);
-
-const signOut = (e) => {
-  e.preventDefault();
-  Auth.signOut();
-  window.location.reload();
-}
 
 ReactDOM.render(
   
@@ -26,17 +19,7 @@ ReactDOM.render(
       crossorigin="anonymous"
     />
     <Container style={{padding: 20}}>
-      <Row>
-        <Col>
-          <Image src="logo.png" />
-        </Col>
-        <Col style={{paddingTop: 30}}>
-          <Button onClick={signOut} variant="link">
-            Sign Out
-          </Button>
-        </Col>
-      </Row>
-      <App />
+      <AuthStateApp />
     </Container>
   </React.StrictMode>,
   document.getElementById('root')
